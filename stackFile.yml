@@ -34,7 +34,7 @@ services:
       - dest: $MAIN_PATH/db-config.php
         src: ./configs/db-config.php
       - dest: $MAIN_PATH/wp-content/db.php
-        src: ./configs/db.php 
+        src: ./configs/db.php
     globalDeps: |
       apt-get install less mysql-client
       curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /usr/local/bin/wp-cli.phar
@@ -80,6 +80,7 @@ services:
     source:
       type: git
       url: https://github.com/phpmyadmin/phpmyadmin
+      version: STABLE
     extensions:
       - mysqli
       - opcache
@@ -108,6 +109,4 @@ hosts:
   - name: main
     requirements:
       cores: 1
-      memory: 2
-
-
+      memory: 1

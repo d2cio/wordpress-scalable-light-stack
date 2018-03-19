@@ -1,0 +1,27 @@
+RewriteEngine on
+
+<IfModule pagespeed_module>
+  ModPagespeed on
+  ModPagespeedEnableFilters rewrite_css,combine_css
+  ModPagespeedEnableFilters rewrite_javascript,combine_javascript
+  ModPagespeedEnableFilters collapse_whitespace,remove_comments
+</IfModule>
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/x-javascript text/plain text/xml image/x-icon
+</IfModule>
+
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresByType image/jpg "access 1 year"
+ExpiresByType image/jpeg "access 1 year"
+ExpiresByType image/gif "access 1 year"
+ExpiresByType image/png "access 1 year"
+ExpiresByType text/css "access 1 month"
+ExpiresByType text/html "access 1 month"
+ExpiresByType application/pdf "access 1 month"
+ExpiresByType text/x-javascript "access 1 month"
+ExpiresByType application/x-shockwave-flash "access 1 month"
+ExpiresByType image/x-icon "access 1 year"
+ExpiresDefault "access 1 month"
+</IfModule>

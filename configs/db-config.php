@@ -55,14 +55,16 @@ $wpdb->add_database(array(
  * This adds the same server again, only this time it is configured as a slave.
  * The last three parameters are set to the defaults but are shown for clarity.
  */
-/*
-$wpdb->add_database(array(
-	'host'     => DB_SLAVE,
-	'user'     => DB_USER,
-	'password' => DB_PASSWORD,
-	'name'     => DB_NAME,
-	'write'    => 0,
-	'read'     => 1,
-	'dataset'  => 'global',
-	'timeout'  => 0.2,
-));*/
+
+if (isset($_ENV['DB_REPLICATION']) && $_ENV['DB_REPLICATION'] == 'on') {
+   $wpdb->add_database(array(
+       'host'     => DB_SLAVE,
+       'user'     => DB_USER,
+       'password' => DB_PASSWORD,
+       'name'     => DB_NAME,
+       'write'    => 0,
+       'read'     => 1,
+       'dataset'  => 'global',
+       'timeout'  => 0.2,
+   ));
+}

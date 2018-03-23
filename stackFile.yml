@@ -21,7 +21,7 @@ services:
 
   - name: cache
     type: redis
-    version: 3.2
+    version: 4.0
     remoteAccess: false
     ports:
       - 6379
@@ -74,7 +74,7 @@ services:
     localDeps: cp -r ~/themes/* /var/www/blog/wp-content/themes/
     initialCommands: |
       cd $MAIN_PATH
-      wp core install --url=$WP_URL --title="$WP_TITLE" --admin_user=$WP_ADMIN_USERNAME --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_EMAIL
+      wp core install --url=$WP_URL --title=\"$WP_TITLE\" --admin_user=$WP_ADMIN_USERNAME --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_EMAIL
       wp plugin install redis-cache --activate
       wp redis enable
     env:
@@ -83,12 +83,14 @@ services:
       WP_ADMIN_USERNAME: null
       WP_ADMIN_PASSWORD: null
       WP_ADMIN_EMAIL: null
+      DB_REPLICATION: off
     comments:
       env:
         WP_TITLE: The title of your Wordpress website
         WP_ADMIN_USERNAME: Username of administrator account
         WP_ADMIN_PASSWORD: Password of administrator account
         WP_ADMIN_EMAIL: Email of administrator account
+        DB_REPLICATION: Set it to "on" when you scale Database to MasterSlave configuration
     deployTo:
       - main
 

@@ -66,10 +66,6 @@ services:
       curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /usr/local/bin/wp
       chmod +x /usr/local/bin/wp
       echo 'wp() { su -p www-data -s /bin/sh -c "/usr/local/bin/wp $*"; }' >> ~/.bashrc
-      curl https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_amd64.deb -o mod-pagespeed.deb
-      dpkg -i mod-pagespeed.deb
-      apt-get --yes --fix-broken install
-      a2enmod rewrite pagespeed
       cp -r /var/www/blog/wp-content/themes ~/themes
     localDeps: cp -r ~/themes/* /var/www/blog/wp-content/themes/
     initialCommands: |
@@ -124,7 +120,6 @@ services:
       - dest: $MAIN_PATH/config.inc.php
         src: ./configs/config.inc.php
     localDeps: composer install
-    globalDeps: a2enmod rewrite
     deployTo:
       - main
 

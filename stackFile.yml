@@ -66,8 +66,8 @@ services:
       curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /usr/local/bin/wp
       chmod +x /usr/local/bin/wp
       echo 'wp() { su -p www-data -s /bin/sh -c "/usr/local/bin/wp $*"; }' >> ~/.bashrc
-      cp -r /var/www/blog/wp-content/themes ~/themes
-    localDeps: cp -r ~/themes/* /var/www/blog/wp-content/themes/
+      cp -r $MAIN_PATH/wp-content/themes ~/themes
+    localDeps: cp -r ~/themes/* $MAIN_PATH/wp-content/themes/
     initialCommands: |
       cd $MAIN_PATH
       wp core install --url=$WP_URL --title=\"$WP_TITLE\" --admin_user=$WP_ADMIN_USERNAME --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_EMAIL

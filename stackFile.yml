@@ -46,11 +46,7 @@ services:
       - 80
     remoteAccess: false
     volumes:
-      - directory: $MAIN_PATH/wp-content/uploads
-        sync: true
-      - directory: $MAIN_PATH/wp-content/plugins
-        sync: true
-      - directory: $MAIN_PATH/wp-content/themes
+      - directory: $MAIN_PATH/wp-content
         sync: true
     configFiles:
       - dest: $MAIN_PATH/wp-config.php
@@ -65,16 +61,14 @@ services:
       apt-get install less mysql-client
       curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /usr/local/bin/wp
       chmod +x /usr/local/bin/wp
-      echo 'wp() { su -p www-data -s /bin/sh -c "/usr/local/bin/wp $*"; }' >> ~/.bashrc
-      cp -r $MAIN_PATH/wp-content/themes ~/themes
-    localDeps: cp -r ~/themes/* $MAIN_PATH/wp-content/themes/
+      cp -r $MAIN_PATH/wp-content /var/www/wp-content-tmp
+    localDeps: cp -r /var/www/wp-content-tmp/* $MAIN_PATH/wp-content
     initialCommands: |
       cd $MAIN_PATH
-      wp core install --url=$WP_URL --title=\"$WP_TITLE\" --admin_user=$WP_ADMIN_USERNAME --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_EMAIL
+      wp core install --url={{=service('blog').getBalancerDomain()}} --title="$WP_TITLE" --admin_user=$WP_ADMIN_USERNAME --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_EMAIL
       wp plugin install redis-cache --activate
       wp redis enable
     env:
-      WP_URL: "{{=service('blog').getBalancerDomain()}}"
       WP_TITLE: null
       WP_ADMIN_USERNAME: null
       WP_ADMIN_PASSWORD: null

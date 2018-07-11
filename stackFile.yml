@@ -4,6 +4,7 @@ services:
     type: mariadb
     version: 10.3
     configuration: StandAlone
+    database: wordpress
     username: wordpress
     # Ask password on create
     userPassword: null
@@ -121,4 +122,4 @@ hosts:
   - name: main
     requirements:
       cores: 1
-      memory: 1
+      memory: 2

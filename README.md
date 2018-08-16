@@ -14,4 +14,4 @@
 
 ## Minimal recommended configuration:
 
-- 1 host with 1GB RAM
+- 1 host with 2GB RAM

@@ -63,6 +63,7 @@ services:
       curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /usr/local/bin/wp
       chmod +x /usr/local/bin/wp
       cp -r $MAIN_PATH/wp-content /var/www/wp-content-tmp
+      chown -R www-data:www-data /var/www
     localDeps: cp -r /var/www/wp-content-tmp/* $MAIN_PATH/wp-content
     initialCommands: |
       cd $MAIN_PATH

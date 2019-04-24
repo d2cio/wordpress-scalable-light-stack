@@ -2,7 +2,7 @@ version: '1.0'
 services:
   - name: db
     type: mariadb
-    version: 10.3
+    version: 10.4
     configuration: StandAlone
     database: wordpress
     username: wordpress
@@ -12,9 +12,6 @@ services:
     ports:
       - 3306
     remoteAccess: false
-    configFiles:
-      - dest: my.cnf
-        src: ./configs/my.cnf
     comments:
         username: Database will be created with the same name
     deployTo:
@@ -22,7 +19,7 @@ services:
 
   - name: cache
     type: redis
-    version: 4.0
+    version: 5.0
     remoteAccess: false
     ports:
       - 6379
@@ -31,7 +28,7 @@ services:
 
   - name: blog
     type: phpApache
-    version: 7.1
+    version: 7.2
     source:
       type: download
       url: https://wordpress.org/latest.zip
@@ -99,23 +96,15 @@ services:
     deployTo:
       - main
 
-  - name: pma
-    type: phpApache
-    version: 7.1
-    remoteAccess: true
+  - name: adminer
+    type: docker
+    image: adminer
+    version: latest
     ports:
       - 8080
-    source:
-      type: git
-      url: https://github.com/phpmyadmin/phpmyadmin
-      version: STABLE
-    extensions:
-      - mysqli
-      - opcache
-    configFiles:
-      - dest: $MAIN_PATH/config.inc.php
-        src: ./configs/config.inc.php
-    localDeps: composer install
+    remoteAccess: true
+    env:
+      ADMINER_DEFAULT_SERVER: "{{=service('db').getMasterAlias()}}"
     deployTo:
       - main
 

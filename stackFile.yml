@@ -56,7 +56,7 @@ services:
       - dest: $MAIN_PATH/.htaccess
         src: ./configs/.htaccess
     globalDeps: |
-      apt-get install less mysql-client
+      apt-get install less mariadb-client
       curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /usr/local/bin/wp
       chmod +x /usr/local/bin/wp
       cp -r $MAIN_PATH/wp-content /var/www/wp-content-tmp
